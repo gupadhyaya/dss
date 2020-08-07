@@ -1,3 +1,43 @@
+
+# Harmony Deployment of Multi Collateral Dai
+
+Testnet contracts
+```
+VAT=0x01b93dbdca395b0583b8ca444b8c63d2f4f5963f
+CAT=0x9266ddef5092d6819826bcbb92c9147a5e107299
+SPOTTER=0x54977b38f2dc81114b1f316892e7f3965826ab63
+FLIPPER=0x73181521461f7e3b6434fe8a9e4c37988d13db98
+GEM=0xb4f43907dbd299782d0f965a045432c17ca8571e
+GEMJOIN=0x617924ed75703447812bc757e76d07d7ab0c1f5f
+DAI=0x3c65027ec4bc1f70fec681525781ea7d6f373d8f
+DAIJOIN=0x17e7edeba92b19beb4e648414fcb79bfdd456d92
+FLAPPER=0x9f5c59669cac5bf6a6bb69f9131a11cbb5ac16b4
+FLOPPER=0x09769cd34fd01d7b89f10d14158547540bfedfc2
+VOW=0x31272231a5ed30978981d4b4609ca2234d09e92a
+MKR=0xe42d81bb68a59567d7a714fcdca087078d80bcc7
+```
+
+1. Fund user account some gems (need admin private key for the gem contract, ask ganesh)
+```
+node scripts/demo/fund_gem.js <addr-to-fund> <amount>
+```
+
+2. Creating vault (or borrow): collateralize gems to obtain dais
+```
+node scripts/demo/borrow.js <addr> <collateral-amount> <dai-amount>
+```
+
+3. Exiting vault: return dais to get back gems
+```
+node scripts/demo/exit.js <addr> <collateral-amount> <dai-amount>
+```
+
+You can check balance before and after steps 2 & 3 using
+```
+node scripts/demo/balance.js <addr>
+```
+========================================================================
+
 # Multi Collateral Dai
 
 This repository contains the core smart contract code for Multi
