@@ -17,19 +17,21 @@ VOW=0xbf24487bd079e5565f906ed61efda58ef4f81b02
 MKR=0xe42d81bb68a59567d7a714fcdca087078d80bcc7
 ```
 
+Precursor step: export all the contract addresses given above.
+
 1. Fund user account some gems (need admin private key for the gem contract, ask ganesh)
 ```
 node scripts/demo/fund_gem.js <addr-to-fund> <amount>
 ```
 
-2. Creating vault (or borrow): collateralize gems to obtain dais
+2. Creating vault (or borrow): collateralize gems to obtain dais, requires PRIVATE_KEY_USER environment variable
 ```
-node scripts/demo/borrow.js <addr> <collateral-amount> <dai-amount>
+node scripts/demo/borrow_new.js <addr> <collateral-amount> <dai-amount>
 ```
 
-3. Exiting vault: return dais to get back gems
+3. Exiting vault: return dais to get back gems, requires PRIVATE_KEY_USER environment variable
 ```
-node scripts/demo/exit.js <addr> <collateral-amount> <dai-amount>
+node scripts/demo/exit_new.js <addr> <collateral-amount> <dai-amount>
 ```
 
 You can check balance before and after steps 2 & 3 using
