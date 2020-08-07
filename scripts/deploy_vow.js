@@ -21,8 +21,8 @@ contract.wallet.addByPrivateKey(process.env.PRIVATE_KEY);
 
 let options2 = { gasPrice: 1000000000, gasLimit: 6721900 };
 const vatAddr = '0x01b93dbdca395b0583b8ca444b8c63d2f4f5963f';
-const flapperAddr = '0x9f5c59669cac5bf6a6bb69f9131a11cbb5ac16b4';
-const flopperAddr = '0x09769cd34fd01d7b89f10d14158547540bfedfc2';
+const flapperAddr = '0xba863de6cb19bb992b8d2c1f1e814ec2988eb482';
+const flopperAddr = '0x29795c2358805db2c84e2bc5704a2dc59d22f974';
 let options3 = { data: bin, arguments: [vatAddr, flapperAddr, flopperAddr] };
 
 contract.methods

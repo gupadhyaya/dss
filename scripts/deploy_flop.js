@@ -21,7 +21,7 @@ contract.wallet.addByPrivateKey(process.env.PRIVATE_KEY);
 
 let options2 = { gasPrice: 1000000000, gasLimit: 6721900 };
 const vatAddr = '0x01b93dbdca395b0583b8ca444b8c63d2f4f5963f';
-const gemAddr = '0xb4f43907dbd299782d0f965a045432c17ca8571e';
+const gemAddr = '0xe42d81bb68a59567d7a714fcdca087078d80bcc7';
 let options3 = { data: bin, arguments: [vatAddr, gemAddr] };
 
 contract.methods
