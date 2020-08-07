@@ -38,6 +38,26 @@ You can check balance before and after steps 2 & 3 using
 ```
 node scripts/demo/balance.js <addr>
 ```
+
+For buying gems from payment contract `export PAYMENT=0xe64a1d7b94a82b4097cd19d4e0657de32e1e2295`. 
+
+1. For buying gems from payment contract. This will pay requivalent ONE tokens to payment.
+```
+node scripts/demo/buy_gem.js
+```
+
+2. For returning the gems to payment contract, approve the payment contract to withdraw gems.
+```
+node scripts/demo/approve_gem.js $PAYMENT 126 // the amount 126 need not be the exact amount
+```
+
+3. For returning gems back to the payment contract. 
+```
+node scripts/demo/return_gem.js
+```
+
+
+
 ========================================================================
 
 # Multi Collateral Dai
