@@ -2,21 +2,23 @@ const { Harmony } = require("@harmony-js/core");
 const { ChainID, ChainType } = require("@harmony-js/utils");
 const { toUtf8Bytes } = require("@harmony-js/contract");
 const { hexlify } = require("@harmony-js/crypto");
-const hmy = new Harmony("https://api.s0.b.hmny.io", {
-  chainType: ChainType.Harmony,
-  chainId: ChainID.HmyTestnet,
-});
-
 var args = process.argv.slice(2);
-if (args.length != 3) {
-  console.log(
-    "Usage: node scripts/demo/borrow.js <addr> <collateral-amount> <dai-amount>"
-  );
+if (args.length != 4) {
+  console.log("Usage: node scripts/borrow_new.js <network(localnet|testnet|mainnet)> <addr> <gem-amount> <dai>");
   process.exit(1);
 }
-const addr = args[0];
-const gemAmount = parseInt(args[1], 10);
-const daiAmount = parseInt(args[2], 10);
+var config = require('../../config.json')[`${args[0]}`];
+const hmy = new Harmony(
+    config.url,
+    {
+      chainType: ChainType.Harmony,
+      chainId: config.chainid,
+    }
+  );
+const addr = args[1];
+const gemAmount = parseInt(args[2], 10);
+const daiAmount = parseInt(args[3], 10);
+
 let options2 = { gasPrice: 1000000000, gasLimit: 6721900 };
 
 const allJson = require("../../out/dapp.sol.json");

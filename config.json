@@ -1,0 +1,14 @@
+{
+    "localnet": {
+        "url": "http://localhost:9500",
+        "chainid": 2
+    },
+    "testnet": {
+        "url": "https://api.s0.b.hmny.io",
+        "chainid": 2
+    },
+    "mainnet": {
+        "url": "https://api.s0.t.hmny.io",
+        "chainid": 1
+    }
+}

@@ -2,7 +2,7 @@ const { Harmony } = require("@harmony-js/core");
 const { ChainID, ChainType } = require("@harmony-js/utils");
 var args = process.argv.slice(2);
 if (args.length != 3) {
-  console.log("Usage: node scripts/fund_gem.js <network(localnet|testnet|mainnet)> <addr> <amount>");
+  console.log("Usage: node scripts/approve_gem_amount.js <network(localnet|testnet|mainnet)> <addr> <amount>");
   process.exit(1);
 }
 var config = require('../../config.json')[`${args[0]}`];
@@ -22,11 +22,11 @@ var abi = JSON.parse(contractJson.abi);
 const contractAddr = process.env.GEM;
 
 let contract = hmy.contracts.createContract(abi, contractAddr);
-contract.wallet.addByPrivateKey(process.env.PRIVATE_KEY);
+contract.wallet.addByPrivateKey(process.env.PRIVATE_KEY_USER);
 
 let options2 = { gasPrice: 1000000000, gasLimit: 6721900 };
 
-contract.methods["mint(address,uint256)"](addr, amount)
+contract.methods["approve(address,uint256)"](addr, amount)
   .send(options2)
   .then((response) => {
     if (response.transaction.txStatus == "REJECTED") {
@@ -34,8 +34,5 @@ contract.methods["mint(address,uint256)"](addr, amount)
       process.exit(0);
     }
     console.log(response.transaction.receipt);
-    contract.methods.balanceOf(addr).call(options2).then(balance => {
-      console.log('balance: ' + balance.toString());
-      process.exit(0);
-    });
+    process.exit(0);
   });
