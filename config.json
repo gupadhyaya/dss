@@ -1,14 +1,17 @@
 {
     "localnet": {
         "url": "http://localhost:9500",
-        "chainid": 2
+        "chainid": 2,
+        "ws": "ws://localhost:9800"
     },
     "testnet": {
         "url": "https://api.s0.b.hmny.io",
-        "chainid": 2
+        "chainid": 2,
+        "ws": "wss://ws.s0.b.hmny.io"
     },
     "mainnet": {
         "url": "https://api.s0.t.hmny.io",
-        "chainid": 1
+        "chainid": 1,
+        "ws": "wss://ws.s0.t.hmny.io"
     }
 }

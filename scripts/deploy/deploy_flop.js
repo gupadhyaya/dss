@@ -2,17 +2,22 @@ const { Harmony } = require("@harmony-js/core");
 const { ChainID, ChainType } = require("@harmony-js/utils");
 const { toUtf8Bytes } = require("@harmony-js/contract");
 const { hexlify } = require("@harmony-js/crypto");
+var args = process.argv.slice(2);
+if (args.length != 1) {
+  console.log("Usage: node scripts/deploy.js <network(localnet|testnet|mainnet)>");
+  process.exit(1);
+}
+var config = require('../config.json')[`${args[0]}`];
 const hmy = new Harmony(
-  // let's assume we deploy smart contract to this end-point URL
-  "https://api.s0.b.hmny.io",
-  {
-    chainType: ChainType.Harmony,
-    chainId: ChainID.HmyTestnet,
-  }
-);
-
+    config.url,
+    {
+      chainType: ChainType.Harmony,
+      chainId: config.chainid,
+    }
+  );
+  
 const allJson = require("../out/dapp.sol.json");
-const contractJson = allJson.contracts['src/vow.sol:Vow'];
+const contractJson = allJson.contracts['src/flop.sol:Flopper'];
 var abi = JSON.parse(contractJson.abi);
 var bin = '0x' + contractJson.bin;
 
@@ -20,10 +25,9 @@ let contract = hmy.contracts.createContract(abi);
 contract.wallet.addByPrivateKey(process.env.PRIVATE_KEY);
 
 let options2 = { gasPrice: 1000000000, gasLimit: 6721900 };
-const vatAddr = '0x01b93dbdca395b0583b8ca444b8c63d2f4f5963f';
-const flapperAddr = '0xba863de6cb19bb992b8d2c1f1e814ec2988eb482';
-const flopperAddr = '0x29795c2358805db2c84e2bc5704a2dc59d22f974';
-let options3 = { data: bin, arguments: [vatAddr, flapperAddr, flopperAddr] };
+const vatAddr = '0x5df6b8de8e82e49a40e29d30f2e05f1adafbaf77';
+const mkrAddr = '0x64df8b8163f5f1a93f39c7c69d410a94a1cb608a';
+let options3 = { data: bin, arguments: [vatAddr, mkrAddr] };
 
 contract.methods
   .contractConstructor(options3)

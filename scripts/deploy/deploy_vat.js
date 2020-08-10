@@ -1,18 +1,21 @@
 const { Harmony } = require("@harmony-js/core");
 const { ChainID, ChainType } = require("@harmony-js/utils");
-const { toUtf8Bytes } = require("@harmony-js/contract");
-const { hexlify } = require("@harmony-js/crypto");
+var args = process.argv.slice(2);
+if (args.length != 1) {
+  console.log("Usage: node scripts/deploy.js <network(localnet|testnet|mainnet)>");
+  process.exit(1);
+}
+var config = require('../config.json')[`${args[0]}`];
 const hmy = new Harmony(
-  // let's assume we deploy smart contract to this end-point URL
-  "https://api.s0.b.hmny.io",
-  {
-    chainType: ChainType.Harmony,
-    chainId: ChainID.HmyTestnet,
-  }
-);
+    config.url,
+    {
+      chainType: ChainType.Harmony,
+      chainId: config.chainid,
+    }
+  );
 
 const allJson = require("../out/dapp.sol.json");
-const contractJson = allJson.contracts['src/join.sol:GemJoin'];
+const contractJson = allJson.contracts['src/vat.sol:Vat'];
 var abi = JSON.parse(contractJson.abi);
 var bin = '0x' + contractJson.bin;
 
@@ -20,10 +23,7 @@ let contract = hmy.contracts.createContract(abi);
 contract.wallet.addByPrivateKey(process.env.PRIVATE_KEY);
 
 let options2 = { gasPrice: 1000000000, gasLimit: 6721900 };
-const vatAddr = '0x01b93dbdca395b0583b8ca444b8c63d2f4f5963f';
-var ilk = hexlify(toUtf8Bytes("HarmonyERC20"));
-const gemAddr = '0xb4f43907dbd299782d0f965a045432c17ca8571e';
-let options3 = { data: bin, arguments: [vatAddr, ilk, gemAddr] };
+let options3 = { data: bin };
 
 contract.methods
   .contractConstructor(options3)
