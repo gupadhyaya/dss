@@ -2,7 +2,7 @@ const { Harmony } = require("@harmony-js/core");
 const { ChainID, ChainType } = require("@harmony-js/utils");
 var args = process.argv.slice(2);
 if (args.length != 3) {
-  console.log("Usage: node scripts/dai.js <network-url> <addr-to-fund> <amount>");
+  console.log("Usage: node scripts/fund_gem.js <network-url> <addr-to-fund> <amount>");
   process.exit(1);
 }
 const url = args[0];
@@ -18,10 +18,12 @@ const hmy = new Harmony(
 );
 
 const allJson = require("../../out/dapp.sol.json");
-const contractJson = allJson.contracts["src/dai.sol:Dai"];
-var abi = JSON.parse(contractJson.abi);
-let contract = hmy.contracts.createContract(abi, process.env.DAI);
+let contract = hmy.contracts.createContract(
+  JSON.parse(allJson.contracts["lib/ds-token/src/token.sol:DSToken"].abi),
+  process.env.MKR
+);
 contract.wallet.addByPrivateKey(process.env.PRIVATE_KEY);
+
 let options2 = { gasPrice: 1000000000, gasLimit: 6721900 };
 
 contract.methods["mint(address,uint256)"](addr, amount)

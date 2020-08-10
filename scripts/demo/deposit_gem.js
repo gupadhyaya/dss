@@ -3,8 +3,8 @@ const { ChainID, ChainType } = require("@harmony-js/utils");
 const { toUtf8Bytes } = require("@harmony-js/contract");
 const { hexlify } = require("@harmony-js/crypto");
 var args = process.argv.slice(2);
-if (args.length != 3) {
-  console.log("Usage: node scripts/deposit_gem.js <network(localnet|testnet|mainnet)> <addr> <gem-amount>");
+if (args.length != 4) {
+  console.log("Usage: node scripts/deposit_gem.js <network(localnet|testnet|mainnet)> <addr> <private> <gem-amount>");
   process.exit(1);
 }
 var config = require('../../config.json')[`${args[0]}`];
@@ -16,7 +16,8 @@ const hmy = new Harmony(
     }
   );
 const addr = args[1];
-const gemAmount = parseInt(args[2], 10);
+const prv = args[2];
+const gemAmount = parseInt(args[3], 10);
 
 let options2 = { gasPrice: 1000000000, gasLimit: 6721900 };
 
@@ -26,7 +27,7 @@ let gemContract = hmy.contracts.createContract(
   JSON.parse(allJson.contracts["lib/ds-token/src/token.sol:DSToken"].abi),
   process.env.GEM
 );
-gemContract.wallet.addByPrivateKey(process.env.PRIVATE_KEY_USER);
+gemContract.wallet.addByPrivateKey(prv);
 
 // // user will collateralize gems using gem join contract
 let gemJoinContract = hmy.contracts.createContract(
