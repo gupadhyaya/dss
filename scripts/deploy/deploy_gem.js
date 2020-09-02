@@ -7,7 +7,7 @@ if (args.length != 1) {
   console.log("Usage: node scripts/deploy.js <network(localnet|testnet|mainnet)>");
   process.exit(1);
 }
-var config = require('../config.json')[`${args[0]}`];
+var config = require('../../config.json')[`${args[0]}`];
 const hmy = new Harmony(
     config.url,
     {
@@ -16,7 +16,7 @@ const hmy = new Harmony(
     }
   );
 
-const allJson = require("../out/dapp.sol.json");
+const allJson = require("../../out/dapp.sol.json");
 const contractJson = allJson.contracts['lib/ds-token/src/token.sol:DSToken'];
 var abi = JSON.parse(contractJson.abi);
 var bin = '0x' + contractJson.bin;
